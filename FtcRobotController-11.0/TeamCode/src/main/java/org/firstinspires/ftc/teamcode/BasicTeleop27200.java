@@ -56,7 +56,7 @@ public class BasicTeleop27200 extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor intakeMotor = null;
+    private DcMotor flywheelOut = null;
     private DcMotor frontLeftMotor = null;
     private DcMotor backLeftMotor = null;
     private DcMotor frontRightMotor = null;
@@ -75,6 +75,8 @@ public class BasicTeleop27200 extends OpMode
         backLeftMotor   = hardwareMap.get(DcMotor.class, "backLeftMotor");
         frontRightMotor  = hardwareMap.get(DcMotor.class, "frontRightMotor");
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
+        flywheelOut = hardwareMap.get(DcMotor.class,"flywheelOut");
+
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -106,6 +108,7 @@ public class BasicTeleop27200 extends OpMode
     @Override
     public void loop()
     {
+
         double y = gamepad1.left_stick_y; // Remember, Y stick is reversed!
         double x = -gamepad1.left_stick_x;
         double rx = -gamepad1.right_stick_x;
@@ -114,9 +117,14 @@ public class BasicTeleop27200 extends OpMode
         backLeftMotor.setPower(y - x + rx);
         frontRightMotor.setPower(y - x - rx);
         backRightMotor.setPower(y + x - rx);
-        if (gamepad1.dpad_down)
-        {
 
+        if (gamepad1.right_bumper)
+        {
+            flywheelOut.setPower(0.75);
+        }
+        else
+        {
+            flywheelOut.setPower(0);
         }
     }
 
