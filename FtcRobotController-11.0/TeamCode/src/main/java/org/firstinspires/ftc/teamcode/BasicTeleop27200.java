@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -55,12 +56,18 @@ import com.qualcomm.robotcore.util.Range;
 public class BasicTeleop27200 extends OpMode
 {
     // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime leftGateTimer = new ElapsedTime();
+    private ElapsedTime rightGateTimer = new ElapsedTime();
     private DcMotor flywheelOut = null;
     private DcMotor frontLeftMotor = null;
     private DcMotor backLeftMotor = null;
     private DcMotor frontRightMotor = null;
     private DcMotor backRightMotor = null;
+    private Servo leftGateServo = null;
+    private Servo rightGateServo = null;
+    private boolean isFlyWheel = false;
+
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -76,7 +83,8 @@ public class BasicTeleop27200 extends OpMode
         frontRightMotor  = hardwareMap.get(DcMotor.class, "frontRightMotor");
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
         flywheelOut = hardwareMap.get(DcMotor.class,"flywheelOut");
-
+        leftGateServo = hardwareMap.get(Servo.class,"leftGateServo");
+        rightGateServo = hardwareMap.get(Servo.class,"rightGateServo");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -99,7 +107,6 @@ public class BasicTeleop27200 extends OpMode
      */
     @Override
     public void start() {
-        runtime.reset();
     }
 
     /*
@@ -118,13 +125,39 @@ public class BasicTeleop27200 extends OpMode
         frontRightMotor.setPower(y - x - rx);
         backRightMotor.setPower(y + x - rx);
 
-        if (gamepad1.right_bumper)
+
+        if (gamepad1.rightBumperWasPressed()){
+            isFlyWheel = ! isFlyWheel;
+        }
+
+        if (isFlyWheel)
         {
             flywheelOut.setPower(0.75);
         }
         else
         {
             flywheelOut.setPower(0);
+        }
+
+
+        if(gamepad1.dpadLeftWasPressed()){
+            leftGateTimer.reset();
+
+            leftGateServo.setPosition(0.5);
+        }
+        if(leftGateTimer.seconds() < 1){
+            leftGateServo.setPosition(0.7);
+        }
+
+
+
+        if(gamepad1.dpadRightWasPressed()){
+            rightGateTimer.reset();
+
+            rightGateServo.setPosition(0.5);
+        }
+        if(rightGateTimer.seconds() < 1){
+            rightGateServo.setPosition(0.7);
         }
     }
 
