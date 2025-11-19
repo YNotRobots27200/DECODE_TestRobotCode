@@ -29,13 +29,11 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 /*
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -58,7 +56,8 @@ public class BasicTeleop27200 extends OpMode
     // Declare OpMode members.
     private ElapsedTime leftGateTimer = new ElapsedTime();
     private ElapsedTime rightGateTimer = new ElapsedTime();
-    private DcMotor flywheelOut = null;
+    private DcMotor flywheelOutRight = null;
+    private DcMotor flywheelOutLeft = null;
     private DcMotor frontLeftMotor = null;
     private DcMotor backLeftMotor = null;
     private DcMotor frontRightMotor = null;
@@ -79,11 +78,19 @@ public class BasicTeleop27200 extends OpMode
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
         frontLeftMotor  = hardwareMap.get(DcMotor.class, "frontLeftMotor");
+
         backLeftMotor   = hardwareMap.get(DcMotor.class, "backLeftMotor");
+
         frontRightMotor  = hardwareMap.get(DcMotor.class, "frontRightMotor");
+
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
-        flywheelOut = hardwareMap.get(DcMotor.class,"flywheelOut");
+
+        flywheelOutRight = hardwareMap.get(DcMotor.class,"flywheelOutRight");
+
+        flywheelOutLeft = hardwareMap.get(DcMotor.class,"flywheelOutLeft");
+
         leftGateServo = hardwareMap.get(Servo.class,"leftGateServo");
+
         rightGateServo = hardwareMap.get(Servo.class,"rightGateServo");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -126,18 +133,22 @@ public class BasicTeleop27200 extends OpMode
         backRightMotor.setPower(y + x - rx);
 
 
-        if (gamepad1.rightBumperWasPressed()){
+        if (gamepad1.rightBumperWasPressed())
+        {
             isFlyWheel = ! isFlyWheel;
         }
 
         if (isFlyWheel)
         {
-            flywheelOut.setPower(0.75);
+            flywheelOutRight.setPower(0.75);
+            flywheelOutLeft.setPower(-0.75);
         }
         else
         {
-            flywheelOut.setPower(0);
+            flywheelOutRight.setPower(0);
+            flywheelOutLeft.setPower(0);
         }
+
 
 
         if(gamepad1.dpadLeftWasPressed()){
