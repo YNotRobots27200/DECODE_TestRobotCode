@@ -55,7 +55,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class BasicTeleop27200 extends OpMode
 {
-
+    private DcMotor intakeRight = null;
+    private DcMotor intakeLeft = null;
     private DcMotor flywheelOutRight = null;
     private DcMotor flywheelOutLeft = null;
     private DcMotor frontLeftMotor = null;
@@ -65,6 +66,7 @@ public class BasicTeleop27200 extends OpMode
     private Servo leftGateServo = null;
     private Servo rightGateServo = null;
     private boolean isFlyWheel = false;
+    private boolean intake = false;
     private  boolean isServoOpen = false;
     private  boolean aWasPressed = false;
     private  boolean bWasPressed = false;
@@ -94,11 +96,15 @@ public class BasicTeleop27200 extends OpMode
 
         flywheelOutRight = (DcMotorEx) hardwareMap.get(DcMotor.class, "flywheelOutRight") ;
         flywheelOutLeft = (DcMotorEx) hardwareMap.get(DcMotor.class, "flywheelOutLeft") ;
+
+        intakeRight = (DcMotorEx) hardwareMap.get(DcMotor.class, "intakeRight") ;
+        intakeLeft = (DcMotorEx) hardwareMap.get(DcMotor.class, "intakeLeft") ;
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
 
-        rightGateServo.setDirection(Servo.Direction.REVERSE);
+        leftGateServo.setDirection(Servo.Direction.REVERSE);
+
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -143,15 +149,110 @@ public class BasicTeleop27200 extends OpMode
         backRightMotor.setPower(y + x - rx);
 
 
-        if (gamepad2.rightBumperWasPressed())
+        if (gamepad2.yWasPressed())
+        {
+            isFlyWheel = ! isFlyWheel;
+        }
+        if (gamepad2.xWasPressed())
         {
             isFlyWheel = ! isFlyWheel;
         }
 
+
         if (isFlyWheel)
         {
-            flywheelOutRight.setPower(-0.5);
-            flywheelOutLeft.setPower(0.5);
+            flywheelOutRight.setPower(-0.55);
+            flywheelOutLeft.setPower(0.55);
+
+        }
+        else if (isFlyWheel)
+        {
+            flywheelOutRight.setPower(-0.3);
+            flywheelOutLeft.setPower(0.3);
+        }
+        else
+        {
+            flywheelOutRight.setPower(0);
+            flywheelOutLeft.setPower(0);
+        }
+
+        if (gamepad1.yWasPressed())
+        {
+            isFlyWheel = ! isFlyWheel;
+        }
+        if (gamepad2.xWasPressed())
+        {
+            isFlyWheel = ! isFlyWheel;
+        }
+
+
+        if (isFlyWheel)
+        {
+            flywheelOutRight.setPower(-0.55);
+            flywheelOutLeft.setPower(0.55);
+
+        }
+        else if (isFlyWheel)
+        {
+            flywheelOutRight.setPower(-0.3);
+            flywheelOutLeft.setPower(0.3);
+        }
+        else
+        {
+            flywheelOutRight.setPower(0);
+            flywheelOutLeft.setPower(0);
+        }
+        if (gamepad1.aWasPressed())
+        {
+            intake = ! intake;
+        }
+
+        else if (intake)
+        {
+            intakeRight.setPower(-0.3);
+            intakeLeft.setPower(0.3);
+        }
+        else
+        {
+            intakeRight.setPower(0);
+            intakeLeft.setPower(0);
+        }
+        if (gamepad1.xWasPressed())
+        {
+            intake = ! intake;
+        }
+
+        else if (intake)
+        {
+            intakeRight.setPower(-0.3);
+            intakeLeft.setPower(0.3);
+        }
+        else
+        {
+            intakeRight.setPower(0);
+            intakeLeft.setPower(0);
+        }
+
+        if (gamepad1.yWasPressed())
+        {
+            isFlyWheel = ! isFlyWheel;
+        }
+        if (gamepad2.xWasPressed())
+        {
+            isFlyWheel = ! isFlyWheel;
+        }
+
+
+        if (isFlyWheel)
+        {
+            flywheelOutRight.setPower(-0.55);
+            flywheelOutLeft.setPower(0.55);
+
+        }
+        else if (isFlyWheel)
+        {
+            flywheelOutRight.setPower(-0.3);
+            flywheelOutLeft.setPower(0.3);
         }
         else
         {
@@ -160,9 +261,13 @@ public class BasicTeleop27200 extends OpMode
         }
 
 
+
+
+
+
         if (gamepad2.a) {
 
-            rightGateServo.setPosition(.4);
+            rightGateServo.setPosition(.35);
         }
 
         else {
@@ -171,7 +276,7 @@ public class BasicTeleop27200 extends OpMode
 
         if (gamepad2.b) {
 
-            leftGateServo.setPosition(.6);
+            leftGateServo.setPosition(.65);
         }
 
         else {

@@ -31,9 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -52,9 +50,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Basic Auto 27200", group="Iterative OpMode")
+@Autonomous(name="BlueShoot Auto 27200", group="Iterative OpMode")
 
-public class BasicAuto27200 extends OpMode
+public class BlueShoot27200 extends OpMode
 {
     private ElapsedTime timer = new ElapsedTime();
     private DcMotor flywheelOutRight = null;
@@ -133,16 +131,37 @@ public class BasicAuto27200 extends OpMode
     @Override
     public void loop()
     {
-        if (timer.seconds()<30){
-            MoveRobot(0,-.05,0);
+
+        timer.reset();
+        while ((timer.seconds() < 1)) {
+            MoveRobot(0,-0.37,0);
         }
-        else {
-            MoveRobot(0,0,0);
+        MoveRobot(0,0,0);
+
+        flywheelOutRight.setPower(-0.5);
+        flywheelOutLeft.setPower(0.5);
+
+        timer.reset();
+        while ((timer.seconds() < 2)) {
+
         }
+        rightGateServo.setPosition(.35);
+        leftGateServo.setPosition(.35);
+        timer.reset();
+        while ((timer.seconds() < 5)) {
 
+        }
+        timer.reset();
+        while ((timer.seconds() < 0.6)) {
+            MoveRobot(-0.9,-0.,0);
+        }
+        MoveRobot(0,0,0);
+            timer.reset();
 
-
-
+        while ((timer.seconds() < 3000)) {
+            flywheelOutRight.setPower(0);
+            flywheelOutLeft.setPower(0);
+        }
     }
 
     /*
