@@ -113,6 +113,9 @@ public class BasicTeleop27200 extends OpMode
         flywheelOutLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         flywheelOutRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
