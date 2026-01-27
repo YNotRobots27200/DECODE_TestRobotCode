@@ -139,8 +139,8 @@ public class BasicTeleop27200 extends OpMode
     public void loop()
     {
 
-        double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
-        double x = gamepad1.left_stick_x * 1.1;
+        double y = gamepad1.left_stick_y; // Remember, Y stick is reversed!
+        double x = -gamepad1.left_stick_x * 1.1;
         double rx = gamepad1.right_stick_x;
 
         frontLeftMotor.setPower(y + x + rx);
@@ -176,7 +176,7 @@ public class BasicTeleop27200 extends OpMode
             flywheelOutLeft.setPower(0);
         }
 
-        if (gamepad1.yWasPressed())
+        if (gamepad2.yWasPressed())
         {
             isFlyWheel = ! isFlyWheel;
         }
@@ -202,36 +202,69 @@ public class BasicTeleop27200 extends OpMode
             flywheelOutRight.setPower(0);
             flywheelOutLeft.setPower(0);
         }
-        if (gamepad1.aWasPressed())
-        {
-            intake = ! intake;
-        }
 
-        else if (intake)
+        if (gamepad1.a)
         {
-            intakeRight.setPower(-0.3);
-            intakeLeft.setPower(0.3);
+            intakeRight.setPower(3);
+            intakeLeft.setPower(3);
         }
         else
         {
             intakeRight.setPower(0);
             intakeLeft.setPower(0);
         }
-        if (gamepad1.xWasPressed())
+        if (gamepad1.b)
         {
-            intake = ! intake;
-        }
-
-        else if (intake)
-        {
-            intakeRight.setPower(-0.3);
-            intakeLeft.setPower(0.3);
+            intakeRight.setPower(-1);
+            intakeLeft.setPower(-1);
         }
         else
         {
             intakeRight.setPower(0);
             intakeLeft.setPower(0);
         }
+        //if (gamepad1.xWasPressed());
+        //{
+          //  intakeRight.setPower(1);
+            //intakeLeft.setPower(-1);
+        //}
+       // else
+        //{
+          //  intakeRight.setPower(0);
+           // intakeLeft.setPower(0);
+
+
+
+        //if (gamepad1.aWasPressed())
+        //{
+          //  intake == ! intake;
+        //}
+
+        //else if (intake)
+        //{
+          //  intakeRight.setPower(-0.3);
+            //intakeLeft.setPower(0.3);
+        //}
+        //else
+        //{
+          //  intakeRight.setPower(0);
+          //  intakeLeft.setPower(0);
+        //}
+        //if (gamepad1.xWasPressed())
+        //{
+          //  intake = ! intake;
+        //}
+
+        //else if (intake)
+        //{
+          //  intakeRight.setPower(0.3);
+            //intakeLeft.setPower(-0.3);
+        //}
+        //else
+        //{
+          //  intakeRight.setPower(0);
+            //intakeLeft.setPower(0);
+        //}
 
         if (gamepad1.yWasPressed())
         {

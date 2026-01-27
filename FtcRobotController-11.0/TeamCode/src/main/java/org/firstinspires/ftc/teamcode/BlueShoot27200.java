@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -63,6 +64,8 @@ public class BlueShoot27200 extends OpMode
     private DcMotor backRightMotor = null;
     private Servo leftGateServo = null;
     private Servo rightGateServo = null;
+    private DcMotor intakeRight = null;
+    private DcMotor intakeLeft = null;
     private boolean isFlyWheel = false;
     private  boolean isServoOpen = false;
     private  boolean aWasPressed = false;
@@ -93,6 +96,9 @@ public class BlueShoot27200 extends OpMode
 
         flywheelOutRight = hardwareMap.get(DcMotor.class, "flywheelOutRight") ;
         flywheelOutLeft = hardwareMap.get(DcMotor.class, "flywheelOutLeft") ;
+
+        intakeRight = (DcMotorEx) hardwareMap.get(DcMotor.class, "intakeRight") ;
+        intakeLeft = (DcMotorEx) hardwareMap.get(DcMotor.class, "intakeLeft") ;
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -140,6 +146,9 @@ public class BlueShoot27200 extends OpMode
 
         flywheelOutRight.setPower(-0.5);
         flywheelOutLeft.setPower(0.5);
+        intakeRight.setPower(3);
+        intakeLeft.setPower(3);
+
 
         timer.reset();
         while ((timer.seconds() < 2)) {
@@ -161,6 +170,9 @@ public class BlueShoot27200 extends OpMode
         while ((timer.seconds() < 3000)) {
             flywheelOutRight.setPower(0);
             flywheelOutLeft.setPower(0);
+            intakeRight.setPower(0);
+            intakeLeft.setPower(0);
+
         }
     }
 
