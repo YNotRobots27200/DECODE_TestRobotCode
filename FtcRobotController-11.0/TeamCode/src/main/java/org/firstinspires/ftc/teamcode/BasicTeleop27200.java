@@ -113,8 +113,8 @@ public class BasicTeleop27200 extends OpMode
         flywheelOutLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         flywheelOutRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        intakeLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         // Tell the driver that initialization is complete.
@@ -206,17 +206,12 @@ public class BasicTeleop27200 extends OpMode
             flywheelOutLeft.setPower(0);
         }
 
-        if (gamepad1.a)
+        if (gamepad1.right_trigger > 0.5)
         {
-            intakeRight.setPower(3);
-            intakeLeft.setPower(3);
+            intakeRight.setPower(1);
+            intakeLeft.setPower(1);
         }
-        else
-        {
-            intakeRight.setPower(0);
-            intakeLeft.setPower(0);
-        }
-        if (gamepad1.b)
+        else if (gamepad1.left_trigger > 0.5)
         {
             intakeRight.setPower(-1);
             intakeLeft.setPower(-1);
